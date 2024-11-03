@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            background-color: #131010;
+            color: #fff;
+        }
+
+        .container {
+            height: 500px;
+            width: 50%;
+
+            background-color: #605656;
+            display: flex;
+            flex-direction: column;
+            /* justify-content: center; */
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .input-row {
+            display: flex;
+            gap: 10px;
+            margin: 0 10px;
+        }
+
+        input {
+            /* background-color: red; */
+            text-decoration: none;
+            padding: 5px;
+            outline: none;
+        }
+
+        button {
+            padding: 5px 10px;
+            background-color: blue;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h3>To Do List</h3>
+        <div class="input-row">
+            <input type="text" class="todoValue">
+            <button id="btn">Add</button>
+        </div>
+
+        <div class="todoElement">
+
+        </div>
+    </div>
+
+
+
+    <script>
+        let btn = document.getElementById("btn");
+        let todoValue = document.querySelector(".todoValue");
+        let todoElement = document.querySelector(".todoElement");
+
+        let liElement = document.createElement("li");
+            // Initialize getDataFromLocalStorage with existing data from localStorage or an empty array
+        let getDataFromLocalStorage = JSON.parse(localStorage.getItem("todokey")) || [] ;
+        console.log(getDataFromLocalStorage)
+
+        btn.addEventListener("click", () => {
+            let content = todoValue.value;
+            // if content(data) is not in input then not added
+            if (content.trim() == "") {
+                console.log("kuchh bhi nhi hai")
+                return;
+            }
+            // add dtata in localStorage
+            addDataLocarstorage(content)
+            let liElement = document.createElement("li")
+            todoElement.append(liElement);
+            liElement.innerHTML = content;
+
+            todoValue.value = "";
+        })
+
+       
+        function addDataLocarstorage(content) {
+            getDataFromLocalStorage.push(content)
+            localStorage.setItem("todokey", JSON.stringify(getDataFromLocalStorage))
+            console.log(getDataFromLocalStorage)
+            console.log("ho rha hai store")
+
+        }
+        // show toDO ITEM
+        showtoDoItem();
+        function showtoDoItem() {
+            getDataFromLocalStorage.forEach((value) => {
+                let liElement = document.createElement("li")
+                todoElement.append(liElement);
+                liElement.innerHTML = value;
+            })
+        }
+        
+    </script>
+</body>
+
+</html>
